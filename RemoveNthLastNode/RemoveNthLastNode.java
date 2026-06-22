@@ -1,12 +1,10 @@
-class ListNode {
-    int val;
-    ListNode next;
-    ListNode(int val) { this.val = val; }
-    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-}
-
-
 public class RemoveNthLastNode {
+    public static class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int val) { this.val = val; }
+        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+    }
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode tail = head;
         ListNode del = head;
