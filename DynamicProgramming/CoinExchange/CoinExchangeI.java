@@ -1,5 +1,6 @@
 public class CoinExchangeI {
     public static void main(String[] args) {
+        // dp[][] = including + excluding
         final int[] coins = {1,2,5,10};
         final int amt = 10;
 
