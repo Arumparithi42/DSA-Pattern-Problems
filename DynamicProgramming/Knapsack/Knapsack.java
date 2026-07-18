@@ -9,7 +9,7 @@ class Item{
     }
 }
 public class Knapsack {
-    public static int knapsack(Item[] items, int capacity){
+    static int knapsack(Item[] items, int capacity){
         Arrays.sort(items, new Comparator<Item>(){
             @Override
             public int compare(Item item1, Item item2){
