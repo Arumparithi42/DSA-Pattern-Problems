@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 public class PhoneLetterCombination {
     List<String> ans = new ArrayList<>();
     HashMap<Character, String> map = new HashMap<>();
