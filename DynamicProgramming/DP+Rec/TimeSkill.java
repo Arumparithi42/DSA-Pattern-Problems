@@ -1,3 +1,4 @@
+import java.util.Arrays;
 public class TimeSkill {
 
     /* for rec
@@ -6,9 +7,9 @@ public class TimeSkill {
     
     */
     int[] visit = {0,0,0,0};
-    // for dp
-    int[] times = {0,1,2,3,5};
-    int[] skill = {0,3,4,2,1};
+    // for dp and recdp
+    int[] times = {1,2,3,5};
+    int[] skill = {3,4,2,1};
      
     private boolean check(int level, int time, int k){
         int totalTime = 0;
@@ -66,34 +67,41 @@ public class TimeSkill {
         return ans[times.length-1][time][k];
     }
 
-    int[][][] memo;
-     public int recdp(int level, int time, int k) {
-
-        // Base case
-        if (level == times.length)
+    int[][][] memo = new int[10][10][10];
+    int n = times.length;
+    public int recdp(int level, int timeTaken, int itemTaken, // states
+        int time, int k) { 
+        
+        // pruning - none
+        // base
+        if (level == n){
             return 0;
-
-        // Memoization
-        if (memo[level][time][k] != -1)
-            return memo[level][time][k];
-
-        // Don't take
-        int ans = rec(level + 1, time, k);
-
-        // Take
-        if (k > 0 && times[level] <= time) {
-            ans = Math.max(
-                    ans,
-                    skill[level] + rec(level + 1,
-                                       time - times[level],
-                                       k - 1)
-            );
         }
 
-        return memo[level][time][k] = ans;
+        // cache check
+        if (memo[level][timeTaken][itemTaken] != -1){
+            return memo[level][time][k];
+        }
+
+        // compute / transition
+        int ans = recdp(level+1, timeTaken, itemTaken, time, k); // not taken
+        if (timeTaken + times[level] <= time && itemTaken + 1 <= k){
+            int ans2 = skill[level] + recdp(level+1, timeTaken + times[level], itemTaken + 1, time, k);
+            ans = Math.max(ans, ans2);
+        }
+        // save and return
+        return memo[level][timeTaken][itemTaken] = ans;
     }
     public static void main(String[] args) {
         TimeSkill ts = new TimeSkill();
-        System.out.println(ts.dp(6, 6));
+        //int[] times = {1,2,3,5};
+        //int[] skill = {3,4,2,1};
+
+        for (int[][] two : ts.memo){
+            for(int[] one : two){
+                Arrays.fill(one, -1);
+            }
+        }
+        System.out.println(ts.recdp(0, 0, 0, 6, 2));
     }
 }
